@@ -1,7 +1,7 @@
 import { createConfig } from "ponder";
 import { parseAbiItem } from "viem";
 
-import { ROBINHOOD_CHAIN_ID } from "@tokenlens/chain";
+import { ROBINHOOD_CHAIN_ID, uniswapV3PoolAbi } from "@tokenlens/chain";
 
 const startBlock = Number(process.env.PONDER_START_BLOCK ?? 0);
 
@@ -27,6 +27,13 @@ export default createConfig({
     ERC20: {
       chain: "robinhood",
       abi: erc20TransferAbi,
+      startBlock,
+    },
+    // Também sem `address`: qualquer contrato que emita o evento Swap do
+    // Uniswap v3 é descoberto como pool — independe de conhecer a factory.
+    UniswapV3Pool: {
+      chain: "robinhood",
+      abi: uniswapV3PoolAbi,
       startBlock,
     },
   },

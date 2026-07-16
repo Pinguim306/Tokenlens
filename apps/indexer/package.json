@@ -14,6 +14,7 @@
   "dependencies": {
     "@tokenlens/chain": "workspace:*",
     "@tokenlens/registry": "workspace:*",
+    "@tokenlens/shared": "workspace:*",
     "drizzle-kit": "^0.30.6",
     "hono": "^4.5.0",
     "ponder": "^0.17.0",

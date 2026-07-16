@@ -16,6 +16,9 @@ importers:
       '@tokenlens/registry':
         specifier: workspace:*
         version: link:../../packages/registry
+      '@tokenlens/shared':
+        specifier: workspace:*
+        version: link:../../packages/shared
       drizzle-kit:
         specifier: ^0.30.6
         version: 0.30.6

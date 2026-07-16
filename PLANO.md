@@ -2,7 +2,7 @@
 
 **RWA Screener / explorador de ativos tokenizados na Robinhood Chain**
 
-Data: julho/2026 · Status: proposta inicial
+Data: julho/2026 · Status: **Fases 0–4 implementadas** (ver §10 — registro de execução)
 
 ---
 
@@ -202,3 +202,20 @@ tokenlens/
 ├── PLANO.md
 └── README.md
 ```
+
+---
+
+## 10. Registro de execução (jul/2026)
+
+| Fase | Status | Observações |
+|---|---|---|
+| 0 — Fundação | ✅ | Monorepo pnpm, docker-compose, CI, indexer Ponder 0.17, web Next.js 16 |
+| 1 — Catálogo | ✅ | Descoberta chain-wide via `Transfer`, metadata on-chain (name/symbol/decimals com tolerância a contratos não-padrão), classificação em 3 camadas |
+| 2 — Métricas | ✅ | Pools descobertos via `Swap` v3 chain-wide (dispensa conhecer a factory); preço USD pelo grafo de pools; volume/atividade por agregados horários incrementais (`pool_hour_data`/`token_hour_data`) em vez de snapshots agendados; liquidez pelos saldos dos pools; holders por contagem incremental (item da Fase 5 antecipado — dispensa Blockscout) |
+| 3 — Screener UI | ✅ | Visões RWA/todos, busca, ordenação (transfers/holders/idade), paginação server-side |
+| 4 — Detalhe | ✅ | Stats, gráfico SVG de atividade 7d, top holders com % do supply observado, pools, transferências recentes |
+| 5 — Polimento | ◑ | SEO base e status de indexação no rodapé prontos; pendente: deploy, monitoramento, OG images |
+
+**Validação**: typecheck/testes/build verdes em CI; pipeline completo (RPC → indexer → Postgres/PGlite → API → UI) exercitado contra uma chain local (ganache, chain ID 4663) com evento `Transfer` real — descoberta, holders, agregados e páginas confirmados. O RPC público da mainnet é bloqueado pela política de egress do ambiente de desenvolvimento remoto; o backfill real requer rodar fora dele (ou liberar `rpc.mainnet.chain.robinhood.com`).
+
+**Desvios conscientes do plano**: ordenação por colunas USD (volume/liquidez) ainda não é server-side — essas métricas são computadas por página; snapshots horários/diários viraram agregados incrementais mantidos nos handlers; Uniswap v4 (PoolManager) fica como TODO.

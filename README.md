@@ -4,7 +4,7 @@
 
 Um índice navegável de todos os RWAs disponíveis na chain: volume, liquidez, holders e atividade recente.
 
-> 📋 Plano de desenvolvimento completo em [PLANO.md](./PLANO.md). Status atual: **Fase 0 (fundação) concluída**.
+> 📋 Plano de desenvolvimento completo em [PLANO.md](./PLANO.md). Status atual: **Fases 0–4 implementadas** — fundação, catálogo com descoberta chain-wide, métricas (preço/volume/liquidez/holders), screener e página de detalhe. Validado end-to-end contra uma chain local; aguardando backfill contra a mainnet real.
 
 ## Visão
 
@@ -40,6 +40,13 @@ pnpm typecheck && pnpm test && pnpm build
 ```
 
 Configuração: copie `apps/indexer/.env.local.example` para `apps/indexer/.env.local` (RPC, bloco inicial, banco). O RPC público da mainnet é `https://rpc.mainnet.chain.robinhood.com`.
+
+## Arquitetura implementada
+
+- **Descoberta chain-wide**: o indexer escuta `Transfer` (ERC-20) e `Swap` (Uniswap v3) de **todos** os contratos da chain, sem endereços fixos — tokens e pools entram no catálogo no primeiro evento.
+- **Métricas**: preço USD derivado do grafo de pools (stablecoins da allowlist como âncora de $1, roteamento por tokens intermediários), volume 24h por lado do pool, liquidez pelos saldos dos pools, holders por contagem incremental de saldos, atividade por agregados horários.
+- **API** (porta 42069): `GET /api/tokens` (filtros, busca, ordenação, paginação), `GET /api/tokens/:address` (detalhe com top holders, pools, transferências e série horária), `GET /api/status`, além de GraphQL em `/graphql` e SQL client em `/sql/*`.
+- **Web** (porta 3000): screener com visões RWA/todos, busca, ordenação e paginação; página de detalhe por ativo com gráfico de atividade 7d.
 
 ## Como o catálogo é montado
 

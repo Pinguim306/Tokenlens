@@ -1,3 +1,6 @@
+export * from "./dto";
+export * from "./metrics";
+
 /**
  * Categorias de classificação dos tokens da chain (seção 5.3 do PLANO.md).
  * A visão padrão do screener mostra apenas as categorias RWA.
