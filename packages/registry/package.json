@@ -1,0 +1,21 @@
+{
+  "name": "@tokenlens/registry",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc",
+    "test": "vitest run",
+    "validate": "vitest run"
+  },
+  "dependencies": {
+    "@tokenlens/shared": "workspace:*",
+    "zod": "^4.4.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.0",
+    "vitest": "^3.2.0"
+  }
+}

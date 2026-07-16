@@ -1,0 +1,5 @@
+{
+  "$comment": "Allowlist curada de RWAs na Robinhood Chain (camada 1 da classificação — seção 5.3 do PLANO.md). Entradas são adicionadas via PR e validadas pelo schema em src/schema.ts. Fonte primária: página Token Contracts da documentação oficial da Robinhood.",
+  "chainId": 4663,
+  "tokens": []
+}
